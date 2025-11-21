@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poowo1101 Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 3.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            color: #b4b4b4;
+            margin-bottom: 30px;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .game-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .game-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .game-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .event-badge-green {
+            display: inline-block;
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+            animation: pulse-green 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+            50% { transform: scale(1.08); box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+        }
+
+        .game-description {
+            color: #b4b4b4;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .game-status {
+            color: #888;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .coming-soon:hover {
+            transform: none !important;
+        }
+
+        .event-card-green {
+            background: rgba(76, 175, 80, 0.15);
+            border: 2px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .event-card-green:hover {
+            background: rgba(76, 175, 80, 0.25);
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            text-align: left;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            color: #f0f0f0;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            font-size: 0.9em;
+        }
+        
+        .social-link.youtube {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4444;
+            border-color: #ff4444;
+        }
+        
+        .social-link.tiktok {
+            background: rgba(0, 0, 0, 0.1);
+            color: #000000;
+            border-color: #000000;
+        }
+        
+        .social-link.telegram {
+            background: rgba(0, 136, 204, 0.1);
+            color: #0088cc;
+            border-color: #0088cc;
+        }
+        
+        .social-link.instagram {
+            background: rgba(225, 48, 108, 0.1);
+            color: #e1306c;
+            border-color: #e1306c;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🎮 Poowo1101 Games</div>
+            <div class="tagline">Творю ігри, які надихають</div>
+        </div>
+
+        <!-- Games Grid -->
+        <div class="games-grid">
+            <!-- ANTI-GOROH Event -->
+            <div class="game-card event-card-green" onclick="window.location.href='anti-goroh.html'">
+                <div class="game-icon">🌱</div>
+                <div class="game-title">
+                    ANTI-GOROH
+                    <span class="event-badge-green">НОВИЙ ІВЕНТ!</span>
+                </div>
+                <div class="game-description">
+                    Зелені "Горохи" захопили Roblox! Приєднуйся до боротьби з цими зеленими істотами!
+                </div>
+                
+                <div class="instructions">
+                    <strong>Наша зброя:</strong>
+                    <ol>
+                        <li>Зелений смайлик 🟢 в аватарці</li>
+                        <li>Нік з "ANTI-GOROH" в Roblox</li>
+                        <li>Тролінг горохів до сліз! 😭</li>
+                    </ol>
+                </div>
+                
+                <div style="color: #4caf50; margin-top: 10px;">🎯 Вигнати горохів з Roblox!</div>
+            </div>
+
+            <!-- Sirbus 2 -->
+            <div class="game-card" onclick="window.location.href='Sirbus/sirbus2.html'">
+                <div class="game-icon">🐱</div>
+                <div class="game-title">
+                    Sirbus 2
+                    <span class="game-badge">НОВЕ!</span>
+                </div>
+                <div class="game-description">
+                    Симулятор догляду за котом. Готуйтесь до незабутніх пригод з вашим вірним другом!
+                </div>
+                <div style="color: #6bcf7f;">🎯 Реліз: 25.10.2025</div>
+            </div>
+
+            <!-- Sirbus: The World Play -->
+            <div class="game-card coming-soon">
+                <div class="game-icon">🌍</div>
+                <div class="game-title">Sirbus: The World Play</div>
+                <div class="game-description">
+                    Мультиплеєрна пригода у відкритому світі! Грайте разом з друзями.
+                </div>
+                <div class="game-status">🔄 Мультиплеєр | Заплановано</div>
+            </div>
+
+            <!-- CSROOF -->
+            <div class="game-card coming-soon">
+                <div class="game-icon">🏢</div>
+                <div class="game-title">CSROOF</div>
+                <div class="game-description">
+                    Тактичний шутер на дахах! Руфери проти спецпідрозділу.
+                </div>
+                <div class="game-status">🔫 Тактичний шутер | В розробці</div>
+            </div>
+
+            <!-- Cosmic Drifter -->
+            <div class="game-card coming-soon">
+                <div class="game-icon">🚀</div>
+                <div class="game-title">Cosmic Drifter</div>
+                <div class="game-description">
+                    Міжгалактична подорож через невідомі сектори космосу.
+                </div>
+                <div class="game-status">В розробці</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="social-links">
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@Poowo1101" target="_blank" class="social-link youtube">
+                    📺 YouTube
+                </a>
+                
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@poowo1101" target="_blank" class="social-link tiktok">
+                    🎵 TikTok
+                </a>
+                
+                <!-- Telegram -->
+                <a href="https://t.me/poowo1101" target="_blank" class="social-link telegram">
+                    ✈️ Telegram
+                </a>
+                
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/poowo1101" target="_blank" class="social-link instagram">
+                    📷 Instagram
+                </a>
+            </div>
+            
+            <div style="color: #666;">
+                © 2025 Poowo1101 Games. Всі права захищені.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Створення частинок для фону
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Випадкові властивості
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const opacity = Math.random() * 0.3 + 0.1;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = opacity;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Анімація для клікабельних карток
+        document.querySelectorAll('.game-card:not(.coming-soon)').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    if (this.querySelector('.event-badge-green')) {
+                        window.location.href = 'anti-goroh.html';
+                    } else {
+                        window.location.href = 'Sirbus/sirbus2.html';
+                    }
+                }, 200);
+            });
+        });
+
+        // Запуск при завантаженні
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Горох чи Класик? | ANTI-GOROH</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2e1a, #133813, #0a5c0a);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 20px;
+            border: 3px solid #4caf50;
+        }
+
+        .game-title {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4caf50, #8bc34a, #cddc39);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .score-box {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #4caf50;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .skin-option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .skin-option:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .skin-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 3px solid;
+        }
+
+        .skin-goroh {
+            border-color: #ff4444;
+        }
+
+        .skin-classic {
+            border-color: #4caf50;
+        }
+
+        .skin-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .skin-goroh-name {
+            color: #ff4444;
+        }
+
+        .skin-classic-name {
+            color: #4caf50;
+        }
+
+        .result {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .correct {
+            color: #4caf50;
+        }
+
+        .wrong {
+            color: #ff4444;
+        }
+
+        .controls {
+            margin: 30px 0;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid #4caf50;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .timer {
+            font-size: 1.5em;
+            color: #cddc39;
+            margin: 15px 0;
+        }
+
+        .combo {
+            font-size: 1.3em;
+            color: #ffd93d;
+            margin: 10px 0;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .back-link {
+            color: #8bc34a;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+        .back-link:hover {
+            color: #cddc39;
+        }
+
+        /* Анімації */
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .bounce {
+            animation: bounce 0.5s ease;
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        /* Ефект для правильного вибору */
+        .correct-choice {
+            border-color: #4caf50 !important;
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.7);
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        /* Ефект для неправильного вибору */
+        .wrong-choice {
+            border-color: #ff4444 !important;
+            box-shadow: 0 0 30px rgba(255, 68, 68, 0.7);
+            background: rgba(255, 68, 68, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="game-title">🎮 Горох чи Класик?</h1>
+            <p>Обери правильний скін - тільки не горох!</p>
+        </div>
+
+        <!-- Game Info -->
+        <div class="game-info">
+            <div class="score-box">
+                🏆 Рекорд: <span id="highScore">0</span>
+            </div>
+            <div class="score-box">
+                💯 Очки: <span id="currentScore">0</span>
+            </div>
+            <div class="score-box">
+                🔥 Комбо: <span id="comboCount">0</span>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+
+        <!-- Timer -->
+        <div class="timer">
+            ⏰ Час: <span id="timer">30</span>с
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-area" id="gameArea">
+            <!-- Скіни будуть додані через JavaScript -->
+        </div>
+
+        <!-- Result -->
+        <div class="result" id="result"></div>
+
+        <!-- Combo -->
+        <div class="combo" id="comboText"></div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn btn-primary" onclick="startGame()" id="startBtn">
+                🚀 Почати гру!
+            </button>
+            <button class="btn btn-secondary" onclick="resetGame()" id="resetBtn" disabled>
+                🔄 Заново
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 Poowo1101 ANTI-GOROH Games</p>
+            <a href="anti-goroh.html" class="back-link">← Назад до ANTI-GOROH</a>
+        </div>
+    </div>
+
+    <script>
+        // Змінні гри
+        let currentScore = 0;
+        let highScore = 0;
+        let combo = 0;
+        let timeLeft = 30;
+        let gameActive = false;
+        let timerInterval;
+        let skins = [];
+
+        // Скіни для гри
+        const skinData = [
+            {
+                url: "https://tr.rbxcdn.com/30DAY-Avatar-3FABC73C0EB8964873B5AD1013076D45-Png/352/352/Avatar/Webp/noFilter",
+                type: "classic",
+                name: "Класик"
+            },
+            {
+                url: "https://tr.rbxcdn.com/30DAY-Avatar-3CEDEC6AF021E716C21E6CC94913F4AD-Png/352/352/Avatar/Webp/noFilter",
+                type: "goroh",
+                name: "Горох"
+            },
+            // Додаткові скіни для різноманітності
+            {
+                url: "https://tr.rbxcdn.com/30DAY-Avatar-3FABC73C0EB8964873B5AD1013076D45-Png/352/352/Avatar/Webp/noFilter",
+                type: "classic",
+                name: "Класик"
+            },
+            {
+                url: "https://tr.rbxcdn.com/30DAY-Avatar-3CEDEC6AF021E716C21E6CC94913F4AD-Png/352/352/Avatar/Webp/noFilter",
+                type: "goroh",
+                name: "Горох"
+            }
+        ];
+
+        function startGame() {
+            if (gameActive) return;
+            
+            gameActive = true;
+            currentScore = 0;
+            combo = 0;
+            timeLeft = 30;
+            
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('resetBtn').disabled = false;
+            document.getElementById('currentScore').textContent = currentScore;
+            document.getElementById('comboCount').textContent = combo;
+            document.getElementById('timer').textContent = timeLeft;
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('result').textContent = '';
+            document.getElementById('comboText').textContent = '';
+            
+            startTimer();
+            generateSkins();
+        }
+
+        function resetGame() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('resetBtn').disabled = true;
+            document.getElementById('result').textContent = 'Гру завершено!';
+            document.getElementById('progressBar').style.width = '0%';
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                document.getElementById('progressBar').style.width = (timeLeft / 30 * 100) + '%';
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function generateSkins() {
+            const gameArea = document.getElementById('gameArea');
+            gameArea.innerHTML = '';
+            
+            // Вибираємо 2 випадкових скіни
+            const selectedSkins = [...skinData].sort(() => Math.random() - 0.5).slice(0, 2);
+            
+            // Перемішуємо порядок
+            selectedSkins.sort(() => Math.random() - 0.5);
+            
+            selectedSkins.forEach((skin, index) => {
+                const skinElement = document.createElement('div');
+                skinElement.className = `skin-option`;
+                skinElement.onclick = () => checkAnswer(skin.type, skinElement);
+                
+                skinElement.innerHTML = `
+                    <img src="${skin.url}" alt="${skin.name}" class="skin-image skin-${skin.type}">
+                    <div class="skin-name skin-${skin.type}-name">${skin.name}</div>
+                `;
+                
+                gameArea.appendChild(skinElement);
+            });
+        }
+
+        function checkAnswer(selectedType, element) {
+            if (!gameActive) return;
+            
+            const isCorrect = selectedType === 'classic';
+            
+            if (isCorrect) {
+                // Правильна відповідь
+                currentScore += 10 + combo * 5;
+                combo++;
+                document.getElementById('currentScore').textContent = currentScore;
+                document.getElementById('comboCount').textContent = combo;
+                
+                element.classList.add('correct-choice', 'bounce');
+                document.getElementById('result').textContent = '✅ Правильно! Це класик!';
+                document.getElementById('result').className = 'result correct';
+                
+                // Комбо повідомлення
+                if (combo >= 3) {
+                    document.getElementById('comboText').textContent = `🔥 COMBO x${combo}! +${combo * 5} очок!`;
+                }
+                
+                // Оновлюємо рекорд
+                if (currentScore > highScore) {
+                    highScore = currentScore;
+                    document.getElementById('highScore').textContent = highScore;
+                }
+                
+                setTimeout(() => {
+                    element.classList.remove('correct-choice', 'bounce');
+                    generateSkins();
+                }, 1000);
+                
+            } else {
+                // Неправильна відповідь
+                combo = 0;
+                currentScore = Math.max(0, currentScore - 5);
+                document.getElementById('currentScore').textContent = currentScore;
+                document.getElementById('comboCount').textContent = combo;
+                
+                element.classList.add('wrong-choice', 'shake');
+                document.getElementById('result').textContent = '❌ Неправильно! Це горох!';
+                document.getElementById('result').className = 'result wrong';
+                document.getElementById('comboText').textContent = '';
+                
+                setTimeout(() => {
+                    element.classList.remove('wrong-choice', 'shake');
+                    generateSkins();
+                }, 1000);
+            }
+        }
+
+        function endGame() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('resetBtn').disabled = true;
+            
+            let message = '';
+            if (currentScore >= 100) {
+                message = '🎉 ТИ ГЕНІЙ! Вітаю з високим результатом!';
+            } else if (currentScore >= 50) {
+                message = '👍 Добре граєш! Продовжуй у тому ж дусі!';
+            } else {
+                message = '💪 Не здавайся! Спробуй ще раз!';
+            }
+            
+            document.getElementById('result').innerHTML = `
+                <div>Гру завершено!</div>
+                <div>Твої очки: ${currentScore}</div>
+                <div>${message}</div>
+            `;
+        }
+
+        // Завантажуємо рекорд з локального сховища
+        window.onload = function() {
+            const savedHighScore = localStorage.getItem('gorohGameHighScore');
+            if (savedHighScore) {
+                highScore = parseInt(savedHighScore);
+                document.getElementById('highScore').textContent = highScore;
+            }
+        };
+
+        // Зберігаємо рекорд при закритті
+        window.onbeforeunload = function() {
+            localStorage.setItem('gorohGameHighScore', highScore);
+        };
+    </script>
+</body>
+</html>

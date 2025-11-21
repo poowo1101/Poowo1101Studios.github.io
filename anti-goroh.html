@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTI-GOROH | Poowo1101</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2e1a, #133813, #0a5c0a);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 20px;
+            border: 3px solid #4caf50;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .main-title {
+            font-size: 4em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4caf50, #8bc34a, #cddc39);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(76, 175, 80, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #a5d6a7;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .enemy-section {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .enemy-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 20px;
+            border: 4px solid #ff5722;
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .enemy-caption {
+            color: #ff5722;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .info-section {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .mission-box {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #4caf50;
+            margin-bottom: 25px;
+        }
+
+        .mission-title {
+            font-size: 1.8em;
+            color: #8bc34a;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .mission-text {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #f0f0f0;
+            text-align: center;
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #4caf50;
+        }
+
+        .instructions-title {
+            font-size: 1.5em;
+            color: #cddc39;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .step-number {
+            background: #4caf50;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 1.2em;
+            color: #8bc34a;
+            margin-bottom: 5px;
+        }
+
+        .step-description {
+            color: #b4b4b4;
+            line-height: 1.5;
+        }
+
+        .crying-section {
+            background: rgba(255, 87, 34, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #ff5722;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .crying-text {
+            font-size: 1.3em;
+            color: #ff5722;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .skin-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .skin-title {
+            font-size: 2em;
+            color: #cddc39;
+            margin-bottom: 30px;
+        }
+
+        .skin-comparison {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .skin-option {
+            text-align: center;
+        }
+
+        .skin-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            border: 4px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .skin-wrong {
+            border-color: #ff4444;
+            position: relative;
+            opacity: 0.6;
+        }
+
+        .skin-wrong::after {
+            content: '❌';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 2em;
+            background: rgba(255, 68, 68, 0.9);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skin-correct {
+            border-color: #4caf50;
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.5);
+        }
+
+        .skin-label {
+            margin-top: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .skin-wrong-label {
+            color: #ff4444;
+            text-decoration: line-through;
+        }
+
+        .skin-correct-label {
+            color: #4caf50;
+        }
+
+        .correct-text {
+            font-size: 1.5em;
+            color: #4caf50;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .game-button {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid #4caf50;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .back-link {
+            color: #8bc34a;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #cddc39;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .main-title {
+                font-size: 2.5em;
+            }
+            
+            .skin-comparison {
+                gap: 20px;
+            }
+            
+            .skin-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">🌱 ANTI-GOROH</h1>
+            <div class="subtitle">Боротьба з зеленими захватниками Roblox!</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Enemy Section -->
+            <div class="enemy-section">
+                <div class="enemy-image">🟢</div>
+                <div class="enemy-caption">ТИПОВИЙ ГОРОХ</div>
+                <p style="color: #a5d6a7; margin-top: 10px;">
+                    Ці зелені істоти захопили Roblox і роблять його гнилим!
+                </p>
+            </div>
+
+            <!-- Info Section -->
+            <div class="info-section">
+                <div class="mission-box">
+                    <h2 class="mission-title">🎯 Наша Місія</h2>
+                    <p class="mission-text">
+                        Зелені "Горохи" захопили Roblox! Вони всюди - в комментах, в іграх, скрізь! 
+                        Час показати хто тут справжній король платформи!
+                    </p>
+                </div>
+
+                <div class="instructions">
+                    <h2 class="instructions-title">📋 Як Приєднатися до Руху</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Змініть аватарку</div>
+                                <div class="step-description">
+                                    Поставте зелений смайлик 🟢 як аватарку - це наш таємний знак!
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Додайте до ніку</div>
+                                <div class="step-description">
+                                    Додайте "ANTI-GOROH" до вашого нікнейму в Roblox
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Троліть горохів</div>
+                                <div class="step-description">
+                                    Коли бачите зеленого "гороха" - пишіть "АНТИ-ГОРОХ АКТІВЕЙТЕД!"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crying Section -->
+        <div class="crying-section">
+            <div class="crying-text">
+                "Хнік хнік мене обізвали какашкою хнік хнік"<br>
+                - Типовий Горох після нашої атаки
+            </div>
+        </div>
+
+        <!-- Skin Selection Section -->
+        <div class="skin-section">
+            <h2 class="skin-title">🎨 Який скін вибрати?</h2>
+            
+            <div class="skin-comparison">
+                <!-- Wrong Skin -->
+                <div class="skin-option">
+                    <img src="https://tr.rbxcdn.com/30DAY-Avatar-3CEDEC6AF021E716C21E6CC94913F4AD-Png/352/352/Avatar/Webp/noFilter" 
+                         alt="Неправильний скін" 
+                         class="skin-image skin-wrong">
+                    <div class="skin-label skin-wrong-label">Горох</div>
+                </div>
+                
+                <!-- Correct Skin -->
+                <div class="skin-option">
+                    <img src="https://tr.rbxcdn.com/30DAY-Avatar-3FABC73C0EB8964873B5AD1013076D45-Png/352/352/Avatar/Webp/noFilter" 
+                         alt="Правильний скін" 
+                         class="skin-image skin-correct">
+                    <div class="skin-label skin-correct-label">Класик</div>
+                </div>
+            </div>
+            
+            <div class="correct-text">✅ Правильно! Обирай класичний скін!</div>
+            
+            <!-- Кнопка для переходу на міні-гру -->
+            <button class="game-button" onclick="window.location.href='goroh-game.html'">
+                🎮 Грати в міні-гру "Горох чи Класик?"
+            </button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="joinMovement()">
+                ✅ Я Приєднуюсь до ANTI-GOROH!
+            </button>
+            <a href="index.html" class="btn btn-secondary">
+                🎮 Назад до Ігор
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 Poowo1101 ANTI-GOROH Movement</p>
+            <a href="index.html" class="back-link">← Повернутися на головну</a>
+        </div>
+    </div>
+
+    <script>
+        function joinMovement() {
+            // Показуємо повідомлення
+            alert('🎉 Вітаю! Ти тепер борець ANTI-GOROH! Разом ми виженемо цих зелених з Roblox!');
+        }
+    </script>
+</body>
+</html>
