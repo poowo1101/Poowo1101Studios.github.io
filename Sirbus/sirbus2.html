@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sirbus 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #141419;
+            color: #F0F0F0;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .game-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        }
+
+        /* Header */
+        .game-header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid #6bcf7f;
+        }
+
+        .game-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .game-subtitle {
+            color: #B4B4B4;
+            font-size: 1.3em;
+        }
+
+        /* Main Menu */
+        .main-menu {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .menu-title {
+            color: #6bcf7f;
+            font-size: 2em;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .menu-button {
+            width: 100%;
+            padding: 20px;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(107, 207, 127, 0.5);
+            border-radius: 12px;
+            color: #F0F0F0;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .menu-button:hover {
+            background: rgba(107, 207, 127, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(107, 207, 127, 0.4);
+        }
+
+        .menu-button:active {
+            transform: translateY(0);
+        }
+
+        /* Modal Windows */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(40, 40, 50, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #6bcf7f;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-title {
+            color: #6bcf7f;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-button {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid;
+            border-radius: 10px;
+            color: #F0F0F0;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-button.telegram {
+            border-color: #0088cc;
+            background: rgba(0, 136, 204, 0.1);
+        }
+
+        .social-button.tiktok {
+            border-color: #000000;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .social-button.instagram {
+            border-color: #e1306c;
+            background: rgba(225, 48, 108, 0.1);
+        }
+
+        .social-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-button {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 100, 100, 0.5);
+            border-radius: 8px;
+            color: #F0F0F0;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-button:hover {
+            background: rgba(255, 100, 100, 0.2);
+        }
+
+        /* Game Info */
+        .game-info {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #6bcf7f;
+        }
+
+        .release-date {
+            color: #6bcf7f;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .version {
+            color: #B4B4B4;
+            font-size: 1em;
+        }
+
+        /* Avatar */
+        .avatar {
+            position: absolute;
+            top: 140px;
+            right: 60px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid #6bcf7f;
+            box-shadow: 0 0 30px rgba(107, 207, 127, 0.6);
+        }
+
+        /* Features List */
+        .features {
+            position: absolute;
+            right: 60px;
+            top: 350px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #6bcf7f;
+            max-width: 350px;
+        }
+
+        .features-title {
+            color: #6bcf7f;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .features-list {
+            color: #B4B4B4;
+            list-style: none;
+            font-size: 1.1em;
+        }
+
+        .features-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .features-list li:before {
+            content: "🎮";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Particles Background -->
+        <div class="particles" id="particles"></div>
+
+        <!-- Header -->
+        <div class="game-header">
+            <h1 class="game-title">Сірбусь 2</h1>
+            <p class="game-subtitle">Симулятор догляду за котом</p>
+        </div>
+
+        <!-- Avatar -->
+        <img src="https://yt3.ggpht.com/OcyXFRwxJkYx3r8OSVaCLxlzJRIiYIY4k6HOetTHhSyF2vyPP6a-HJ9EgMX7rUo3_o-e1D72=s108-c-k-c0x00ffffff-no-rj" 
+             alt="Sirbus 2 Аватарка" 
+             class="avatar">
+
+        <!-- Main Menu -->
+        <div class="main-menu">
+            <div class="menu-title">🎮 Sirbus 2</div>
+            
+            <button class="menu-button" onclick="openPreorderModal()">
+                📦 Пред-заказ
+            </button>
+            
+            <button class="menu-button" onclick="openTechSupportModal()">
+                🔧 ТехПідтримка
+            </button>
+            
+            <button class="menu-button" onclick="goBackToGames()">
+                ← Назад до ігор
+            </button>
+        </div>
+
+        <!-- Game Info -->
+        <div class="game-info">
+            <div class="release-date">🎯 Дата релізу: 25.10.2025</div>
+            <div class="version">Alpha версія 0.1</div>
+        </div>
+
+        <!-- Features -->
+        <div class="features">
+            <div class="features-title">🌟 Особливості гри:</div>
+            <ul class="features-list">
+                <li>Реалістичний симулятор кота</li>
+                <li>Система голоду та енергії</li>
+                <li>Магазин з різноманітними товарами</li>
+                <li>Система досягнень</li>
+                <li>Міні-ігри та розваги</li>
+                <li>Телефон та спілкування</li>
+                <li>Розвиток персонажа</li>
+            </ul>
+        </div>
+
+        <!-- Preorder Modal -->
+        <div id="preorderModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-title">📦 Пред-заказ</div>
+                <p style="margin-bottom: 20px; color: #B4B4B4;">Оберіть соцмережу для передзамовлення:</p>
+                
+                <div class="social-buttons">
+                    <button class="social-button telegram" onclick="openTelegram()">
+                        ✈️ Telegram
+                    </button>
+                    <button class="social-button tiktok" onclick="openTikTok()">
+                        🎵 TikTok
+                    </button>
+                    <button class="social-button instagram" onclick="openInstagram()">
+                        📷 Instagram
+                    </button>
+                </div>
+                
+                <button class="close-button" onclick="closePreorderModal()">Закрити</button>
+            </div>
+        </div>
+
+        <!-- Tech Support Modal -->
+        <div id="techSupportModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-title">🔧 ТехПідтримка</div>
+                <p style="margin-bottom: 20px; color: #B4B4B4;">Оберіть соцмережу для техпідтримки:</p>
+                
+                <div class="social-buttons">
+                    <button class="social-button telegram" onclick="openTelegram()">
+                        ✈️ Telegram
+                    </button>
+                    <button class="social-button tiktok" onclick="openTikTok()">
+                        🎵 TikTok
+                    </button>
+                    <button class="social-button instagram" onclick="openInstagram()">
+                        📷 Instagram
+                    </button>
+                </div>
+                
+                <button class="close-button" onclick="closeTechSupportModal()">Закрити</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Створення частинок для фону
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 25;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 1;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const opacity = Math.random() * 0.2 + 0.1;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = opacity;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Функції для модальних вікон
+        function openPreorderModal() {
+            document.getElementById('preorderModal').style.display = 'block';
+        }
+
+        function closePreorderModal() {
+            document.getElementById('preorderModal').style.display = 'none';
+        }
+
+        function openTechSupportModal() {
+            document.getElementById('techSupportModal').style.display = 'block';
+        }
+
+        function closeTechSupportModal() {
+            document.getElementById('techSupportModal').style.display = 'none';
+        }
+
+        // Функції для відкриття соцмереж
+        function openTelegram() {
+            window.open('https://t.me/poowo1101', '_blank');
+        }
+
+        function openTikTok() {
+            window.open('https://www.tiktok.com/@poowo1101', '_blank');
+        }
+
+        function openInstagram() {
+            window.open('https://www.instagram.com/poowo1101', '_blank');
+        }
+
+        function goBackToGames() {
+            window.location.href = '../index.html';
+        }
+
+        // Закриття модальних вікон при кліку поза ними
+        window.onclick = function(event) {
+            const preorderModal = document.getElementById('preorderModal');
+            const techSupportModal = document.getElementById('techSupportModal');
+            
+            if (event.target === preorderModal) {
+                closePreorderModal();
+            }
+            if (event.target === techSupportModal) {
+                closeTechSupportModal();
+            }
+        }
+
+        // Запуск при завантаженні
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+        });
+
+        // Ефекти при наведенні на кнопки
+        document.querySelectorAll('.menu-button, .social-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
